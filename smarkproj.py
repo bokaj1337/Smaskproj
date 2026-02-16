@@ -42,10 +42,10 @@ def plot_hourly_avg(dataframe):
     plt.legend()
     plt.grid()
     plt.show()
-plot_hourly_avg(cleaned_fil)
+# plot_hourly_avg(cleaned_fil)
 
-def plot_weekday_avg():
-    weekday_avg = fil.groupby("day_of_week")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]].mean().reset_index()
+def plot_weekday_avg(dataframe):
+    weekday_avg = dataframe.groupby("day_of_week")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]].mean().reset_index()
     plt.figure(figsize=(12, 8))
     plt.plot(weekday_avg["day_of_week"], weekday_avg["temp"], label="Temperature")
     plt.plot(weekday_avg["day_of_week"], weekday_avg["dew"], label="Dew Point")
@@ -61,10 +61,10 @@ def plot_weekday_avg():
     plt.legend()
     plt.grid()
     plt.show()
-# plot_weekday_avg()
+# plot_weekday_avg(cleaned_fil)
 
-def plot_monthly_avg():
-    monthly_avg = fil.groupby("month")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]].mean().reset_index()
+def plot_monthly_avg(dataframe):
+    monthly_avg = dataframe.groupby("month")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]].mean().reset_index()
     plt.figure(figsize=(12, 8))
     plt.plot(monthly_avg["month"], monthly_avg["temp"], label="Temperature")
     plt.plot(monthly_avg["month"], monthly_avg["dew"], label="Dew Point")
@@ -80,27 +80,27 @@ def plot_monthly_avg():
     plt.legend()
     plt.grid()
     plt.show()
-# plot_monthly_avg()
+# plot_monthly_avg(cleaned_fil)
 
-def plot_temporal_demand():
+def plot_temporal_demand(dataframe):
     fig, (ax1, ax2, ax3) = plt.subplots(3)
 
     fig.suptitle('Vertically stacked subplots')
 
-    hourly = fil.groupby("hour_of_day")["increase_stock"].mean().reset_index()
+    hourly = dataframe.groupby("hour_of_day")["increase_stock"].mean().reset_index()
     ax1.plot(hourly["hour_of_day"], hourly["increase_stock"])
     ax1.set_title("Demand over hours of day")
 
-    weekday = fil.groupby("day_of_week")["increase_stock"].mean().reset_index()  
+    weekday = dataframe.groupby("day_of_week")["increase_stock"].mean().reset_index()  
     ax2.plot(weekday["day_of_week"], weekday["increase_stock"])  
     ax2.set_title("Demand over day of week") 
 
-    monthly = fil.groupby("month")["increase_stock"].mean().reset_index()  
+    monthly = dataframe.groupby("month")["increase_stock"].mean().reset_index()  
     ax3.plot(monthly["month"], monthly["increase_stock"]) 
     ax3.set_title("Demand over month")
     plt.show()    
 
-# plot_temporal_demand()
+# plot_temporal_demand(cleaned_fil)
 
 
 
