@@ -15,7 +15,7 @@ def process_data(df, scaler=StandardScaler()):
     Makes stock_demand binary and scales data.
     '''
     out = df.replace({"low_bike_demand": 0, "high_bike_demand": 1})
-    numerical_columns = ["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility","increase_stock"]
+    numerical_columns = ["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]
     for col in numerical_columns:
         out[col] = scaler.fit_transform(out[[col]])
     return out
@@ -92,15 +92,17 @@ def plot_temporal_demand(dataframe):
     ax1.set_title("Demand over hours of day")
 
     weekday = dataframe.groupby("day_of_week")["increase_stock"].mean().reset_index()  
-    ax2.plot(weekday["day_of_week"], weekday["increase_stock"])  
+    ax2.plot(weekday["day_of_week"], weekday["increase_stock"], label = "Demand over day of week")  
     ax2.set_title("Demand over day of week") 
 
     monthly = dataframe.groupby("month")["increase_stock"].mean().reset_index()  
     ax3.plot(monthly["month"], monthly["increase_stock"]) 
     ax3.set_title("Demand over month")
     plt.show()    
-
 # plot_temporal_demand(cleaned_fil)
+
+
+
 
 
 
