@@ -3,27 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-raw = pd.read_csv("training_data_VT2026.csv")
+from load_data import get_ready_data
 
-def remove_constant_data(df):
-    constant_columns = [col for col in df.columns if df[col].nunique() == 1]
-    print(f"Dropping constant columns: {constant_columns}")
-    return df.drop(constant_columns, axis=1)    
-
-def process_data(df, scaler=StandardScaler()):
-    '''
-    Makes stock_demand binary and scales data.
-    '''
-    out = df.replace({"low_bike_demand": 0, "high_bike_demand": 1})
-    numerical_columns = ["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]
-    for col in numerical_columns:
-        out[col] = scaler.fit_transform(out[[col]])
-    return out
-
-
-fil = remove_constant_data(raw)
-cleaned_fil = process_data(fil)
-
+data = get_ready_data()
 
 def plot_hourly_avg(dataframe):
     hourly_avg = dataframe.groupby("hour_of_day")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility","increase_stock"]].mean().reset_index()
@@ -42,7 +24,7 @@ def plot_hourly_avg(dataframe):
     plt.legend()
     plt.grid()
     plt.show()
-# plot_hourly_avg(cleaned_fil)
+#plot_hourly_avg(data)
 
 def plot_weekday_avg(dataframe):
     weekday_avg = dataframe.groupby("day_of_week")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]].mean().reset_index()
@@ -61,7 +43,7 @@ def plot_weekday_avg(dataframe):
     plt.legend()
     plt.grid()
     plt.show()
-# plot_weekday_avg(cleaned_fil)
+# plot_weekday_avg(data)
 
 def plot_monthly_avg(dataframe):
     monthly_avg = dataframe.groupby("month")[["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]].mean().reset_index()
@@ -80,7 +62,7 @@ def plot_monthly_avg(dataframe):
     plt.legend()
     plt.grid()
     plt.show()
-# plot_monthly_avg(cleaned_fil)
+# plot_monthly_avg(data)
 
 def plot_temporal_demand(dataframe):
     fig, (ax1, ax2, ax3) = plt.subplots(3)
@@ -92,17 +74,14 @@ def plot_temporal_demand(dataframe):
     ax1.set_title("Demand over hours of day")
 
     weekday = dataframe.groupby("day_of_week")["increase_stock"].mean().reset_index()  
-    ax2.plot(weekday["day_of_week"], weekday["increase_stock"], label = "Demand over day of week")  
+    ax2.plot(weekday["day_of_week"], weekday["increase_stock"])  
     ax2.set_title("Demand over day of week") 
 
     monthly = dataframe.groupby("month")["increase_stock"].mean().reset_index()  
     ax3.plot(monthly["month"], monthly["increase_stock"]) 
     ax3.set_title("Demand over month")
     plt.show()    
-# plot_temporal_demand(cleaned_fil)
-
-
-
+#plot_temporal_demand(data)
 
 
 

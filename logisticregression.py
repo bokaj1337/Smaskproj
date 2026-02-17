@@ -3,7 +3,9 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from smarkproj import cleaned_fil
+from load_data import get_ready_data
+
+cleaned_fil = get_ready_data()
 
 X = cleaned_fil.drop(columns=["increase_stock"])
 Y = cleaned_fil["increase_stock"]
