@@ -10,11 +10,14 @@ cleaned_fil = get_ready_data()
 X = cleaned_fil.drop(columns=["increase_stock"])
 Y = cleaned_fil["increase_stock"]
 
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=42) #Test size är på 30 % men större träningsdata kommer inte ge högre träffsäkerhet
-model = LogisticRegression(max_iter=1000)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=100) #Test size är på 30 % men större träningsdata kommer inte ge högre träffsäkerhet
+model = LogisticRegression(C=1,max_iter=1000) #Modellen tränas inte på så mycket data och påverkas därför mycket av random_state
+
 
 model.fit(X_train, Y_train)
 Y_pred = model.predict(X_test)
 
 print(f"Accuracy: {accuracy_score(Y_test, Y_pred):.4f}")
 
+
+#Inte den mest lämpliga
