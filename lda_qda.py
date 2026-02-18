@@ -20,7 +20,7 @@ lda_pred = lda_model.predict(X_test)
 lda_accuracy = accuracy_score(Y_test, lda_pred)
 print(f"\nLDA Accuracy: {lda_accuracy:.4f}")
 
-qda_model = QuadraticDiscriminantAnalysis()
+qda_model = QuadraticDiscriminantAnalysis(reg_param=0.75) # Lekte med reg_param, ändra tillbaka om ni gör nåt
 qda_model.fit(X_train, Y_train)
 qda_pred = qda_model.predict(X_test)
 
