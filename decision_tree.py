@@ -3,9 +3,13 @@ import pandas as pd
 from load_data import get_ready_data
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 
-rf_orignal_data = RandomForestClassifier(random_state=69, oob_score=True)
+
+rf_orignal_data = RandomForestClassifier(random_state=69, class_weight='balanced_subsample')
 param_grid = {
     "n_estimators": [100, 200, 500],
     'max_features': ['sqrt', 'log2', 0.3, 0.5, 0.8],
@@ -18,5 +22,26 @@ if __name__ == "__main__":
     data = get_ready_data()
     X = data.drop("increase_stock", axis=1)
     y = data["increase_stock"]
-    grid_search_rf.fit(X, y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69, stratify=y)
+    grid_search_rf.fit(X_train, y_train)
     print("Best parameters found: ", grid_search_rf.best_params_)
+
+    results = pd.DataFrame(grid_search_rf.cv_results_)
+
+    top_5 = results.sort_values(by='mean_test_score', ascending=False).head(5)
+    print(top_5[['param_n_estimators', 'param_max_features', 'param_max_depth', 'mean_test_score', 'std_test_score']])
+
+
+    # Test the best one on the test set
+    best_model = grid_search_rf.best_estimator_
+    y_pred = best_model.predict(X_test) 
+
+    print(classification_report(y_test, y_pred))
+
+
+
+    importances = best_model.feature_importances_
+    feat_importances = pd.Series(importances, index=X.columns)
+    feat_importances.nlargest(10).plot(kind='barh')
+    plt.title("Vilka faktorer avgör 'increase_stock'?")
+    plt.show()
