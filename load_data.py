@@ -35,8 +35,9 @@ def create_attribute_type_dict(df):
     attribute_type=dict([("temp",'numerical'),("dew",'numerical'),("humidity",'numerical'),
                      ("precip",'numerical'),("snowdepth",'numerical'),("windspeed",'numerical'),
                      ("cloudcover",'numerical'),("visibility",'numerical')])
-    attribute_type.update(dict([("hour_of_day",'categorical'),("day_of_week",'categorical'),("month",'categorical'),
-                            ("holiday",'categorical'),("weekday",'categorical'),("summertime",'categorical')]))
+    attribute_type.update(dict([("hour_of_day",'categorical'),("day_of_week",'categorical'),
+                                ("month",'categorical')]))
+    attribute_type.update(dict([("holiday",'binary'),("weekday",'binary'),("summertime",'binary')]))
     attribute_type.update(dict([("increase_stock",'target')]))
     return attribute_type
 
