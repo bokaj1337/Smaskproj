@@ -70,6 +70,7 @@ def one_hot_encode_categorical(df, att_dict):
     return df, att_dict
 
 def get_ready_extended_data(scaler=StandardScaler()):
+    '''För tillfället så fungerar den här funktionen som en samling av all feature engineering'''
     extended_data = get_unscaled_data()
     attribute_type = create_attribute_type_dict()
     
