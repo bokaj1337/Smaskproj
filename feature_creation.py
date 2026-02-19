@@ -57,6 +57,13 @@ def add_rush_hour_feature(df, att_dict):
     att_dict['is_rush_hour'] = 'binary'    
     return df, att_dict
 
+def add_dew_point_depression_feature(df, att_dict):
+    ''' Add a feature that is the dew point depression, which is temp - dew. This can be an indicator of how comfortable the weather is for biking.
+    '''
+    df['dew_point_depression'] = df['temp'] - df['dew']
+    att_dict['dew_point_depression'] = 'numerical'    
+    return df, att_dict
+
 def one_hot_encode_categorical(df, att_dict):
     ''' One hot encode all categorical features except the target.
     '''
@@ -79,9 +86,11 @@ def get_ready_extended_data(scaler=StandardScaler()):
     #extended_data, attribute_type = add_good_weather_feature(extended_data, attribute_type)
     #extended_data, attribute_type = add_is_raining_feature(extended_data, attribute_type)
     #extended_data, attribute_type = one_hot_encode_categorical(extended_data, attribute_type)
-    extended_data, attribute_type = add_rush_hour_feature(extended_data, attribute_type)
+    #extended_data, attribute_type = add_rush_hour_feature(extended_data, attribute_type)
+    #extended_data, attribute_type = add_dew_point_depression_feature(extended_data, attribute_type)
     ''' Drop features if wanted '''
-    drop_cols = ["holiday"]
+    drop_cols = []
+    #drop_cols = ["dew"] # Comment out this line for no dropped features.
     extended_data.drop(columns=drop_cols, inplace=True)
     for col in drop_cols:
         del attribute_type[col]

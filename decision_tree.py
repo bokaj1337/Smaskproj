@@ -37,16 +37,19 @@ if __name__ == "__main__":
     best_model = grid_search_rf.best_estimator_
     y_pred = best_model.predict(X_test) 
 
-    print(classification_report(y_test, y_pred))
-
     importances = best_model.feature_importances_
     feat_importances = pd.Series(importances, index=X.columns)
     feat_importances.nlargest(10).plot(kind='barh')
     plt.title("What features are most important for predicting 'increase_stock'?")
     plt.show()
 
+    # Don't optimize according to these...
+    '''
+    print(classification_report(y_test, y_pred))
+
     cm = confusion_matrix(y_test, y_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot(cmap=plt.cm.Blues)
     plt.title("Confusion Matrix for Random Forest")
     plt.show()
+    '''
