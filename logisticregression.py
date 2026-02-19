@@ -10,13 +10,14 @@ cleaned_fil = get_ready_data()
 X = cleaned_fil.drop(columns=["increase_stock"])
 Y = cleaned_fil["increase_stock"]
 
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=100) #Test size är på 30 % men större träningsdata kommer inte ge högre träffsäkerhet
-model = LogisticRegression(penalty='l1', solver='liblinear',max_iter=1000)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3) #Test size är på 30 % men större träningsdata kommer inte ge högre träffsäkerhet
+model = LogisticRegression(C=5,penalty='l1', solver='liblinear',max_iter=1000, class_weight={0: 2, 1: 1}) # Lekte med C, penalty och class_weight, ändra tillbaka om ni gör nåt
+# Jag har satt att det är 2ggr så viktigt att träffa highbikedemand än lowbikedemand
 
-skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=100)
+skf = StratifiedKFold(n_splits=5, shuffle=True)
 
-# Vi kör cross validation på ALL data (X och Y) för att se den generella prestandan
-cv_scores = cross_val_score(model, X, Y, cv=skf, scoring='f1_macro')
+# Vi kör cross validation på X_train och Y_train för att se den generella prestandan
+cv_scores = cross_val_score(model, X_train, Y_train, cv=skf, scoring='f1_macro')
 
 print("--- Cross Validation Resultat (F1-Macro) ---")
 print(f"Scores för varje fold: {cv_scores}")
