@@ -43,6 +43,6 @@ def create_attribute_type_dict(df):
 def get_unscaled_data():
     df = load_raw_data()
     df = remove_constant_data(df)
-    label_mapping = {"low_bike_demand":1, "high_bike_demand":0}
+    label_mapping = {"low_bike_demand":0, "high_bike_demand":1}
     df["increase_stock"] = df["increase_stock"].map(label_mapping)
     return df
