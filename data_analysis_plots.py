@@ -81,7 +81,7 @@ def plot_temporal_demand(dataframe):
     ax3.plot(monthly["month"], monthly["increase_stock"]) 
     ax3.set_title("Demand over month")
     plt.show()    
-#plot_temporal_demand(data)
+plot_temporal_demand(data)
 
 
 

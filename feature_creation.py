@@ -6,7 +6,7 @@ from load_data import get_unscaled_data, create_attribute_type_dict
 from data_analysis import chi2_stats, corr_mat
 
 original_data = get_unscaled_data()
-attribute_type = create_attribute_type_dict(original_data)
+attribute_type = create_attribute_type_dict()
 extended_data = original_data.copy()
 
 def add_app_temp_features(df, att_dict):
@@ -50,6 +50,13 @@ def add_is_raining_feature(df, att_dict):
     att_dict['is_raining'] = 'binary'    
     return df, att_dict
 
+def add_rush_hour_feature(df, att_dict):
+    ''' Add a feature that is 1 if it is rush hour, 0 otherwise. Def rush hour as 4pm-6pm.
+    '''
+    df['is_rush_hour'] = ((df['hour_of_day'] >= 16) & (df['hour_of_day'] <= 18)).astype(int)
+    att_dict['is_rush_hour'] = 'binary'    
+    return df, att_dict
+
 def one_hot_encode_categorical(df, att_dict):
     ''' One hot encode all categorical features except the target.
     '''
@@ -61,6 +68,28 @@ def one_hot_encode_categorical(df, att_dict):
         if col not in att_dict:
             att_dict[col] = 'binary'
     return df, att_dict
+
+def get_ready_extended_data(scaler=StandardScaler()):
+    extended_data = get_unscaled_data()
+    attribute_type = create_attribute_type_dict()
+    
+    ''' Add features if wanted'''
+    #extended_data, attribute_type = add_app_temp_features(extended_data, attribute_type )
+    #extended_data, attribute_type = add_good_weather_feature(extended_data, attribute_type)
+    #extended_data, attribute_type = add_is_raining_feature(extended_data, attribute_type)
+    #extended_data, attribute_type = one_hot_encode_categorical(extended_data, attribute_type)
+    extended_data, attribute_type = add_rush_hour_feature(extended_data, attribute_type)
+    ''' Drop features if wanted '''
+    drop_cols = ["holiday"]
+    extended_data.drop(columns=drop_cols, inplace=True)
+    for col in drop_cols:
+        del attribute_type[col]
+    
+    ''' Scale numerical features '''
+    num_cols = [col for col in extended_data.columns if attribute_type[col] == 'numerical']
+    for col in num_cols:
+        extended_data[col] = scaler.fit_transform(extended_data[[col]])
+    return extended_data
 
 if __name__ == "__main__":
     extended_data, attribute_type = add_app_temp_features(extended_data, attribute_type )
@@ -78,5 +107,5 @@ if __name__ == "__main__":
     day_cols = [col for col in extended_data.columns if "day_of_week" in col]
     month_cols = [col for col in extended_data.columns if "month" in col]
     chi2_stats(extended_data, hour_cols)
-    chi2_stats(extended_data, day_cols)
-    chi2_stats(extended_data, month_cols)
+    #chi2_stats(extended_data, day_cols)
+    #chi2_stats(extended_data, month_cols)

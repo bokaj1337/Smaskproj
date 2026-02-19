@@ -18,7 +18,7 @@ def process_data(df, scaler=StandardScaler()):
     Makes stock_demand binary and scales data.
     '''
     out = df.copy()
-    label_mapping = {"low_bike_demand":1, "high_bike_demand":0}
+    label_mapping = {"low_bike_demand":0, "high_bike_demand":1}
     out["increase_stock"] = out["increase_stock"].map(label_mapping)
     numerical_columns = ["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]
     for col in numerical_columns:
@@ -31,7 +31,7 @@ def get_ready_data():
     df = process_data(df)
     return df
 
-def create_attribute_type_dict(df):
+def create_attribute_type_dict():
     attribute_type=dict([("temp",'numerical'),("dew",'numerical'),("humidity",'numerical'),
                      ("precip",'numerical'),("snowdepth",'numerical'),("windspeed",'numerical'),
                      ("cloudcover",'numerical'),("visibility",'numerical')])
