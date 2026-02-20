@@ -80,12 +80,13 @@ def get_ready_extended_data(scaler=StandardScaler()):
     '''För tillfället så fungerar den här funktionen som en samling av all feature engineering'''
     extended_data = get_unscaled_data()
     attribute_type = create_attribute_type_dict()
+    ''' How to encode categorials:'''
+    extended_data, attribute_type = one_hot_encode_categorical(extended_data, attribute_type)
     
     ''' Add features if wanted'''
     #extended_data, attribute_type = add_app_temp_features(extended_data, attribute_type )
     #extended_data, attribute_type = add_good_weather_feature(extended_data, attribute_type)
     #extended_data, attribute_type = add_is_raining_feature(extended_data, attribute_type)
-    #extended_data, attribute_type = one_hot_encode_categorical(extended_data, attribute_type)
     #extended_data, attribute_type = add_rush_hour_feature(extended_data, attribute_type)
     #extended_data, attribute_type = add_dew_point_depression_feature(extended_data, attribute_type)
     ''' Drop features if wanted '''

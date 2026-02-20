@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 random_state = 69
-rf_orignal_data = RandomForestClassifier(random_state=random_state, class_weight='balanced_subsample')
+rf_orignal_data = RandomForestClassifier(random_state=random_state, class_weight='balanced_subsample') # Balanced subsample
 param_grid = {
     "n_estimators": [100, 200, 500],
     'max_features': ['sqrt', 'log2', 0.3, 0.5, 0.8],
@@ -39,12 +39,11 @@ if __name__ == "__main__":
 
     importances = best_model.feature_importances_
     feat_importances = pd.Series(importances, index=X.columns)
-    feat_importances.nlargest(10).plot(kind='barh')
+    feat_importances.sort_values(ascending=False).plot(kind='barh')
     plt.title("What features are most important for predicting 'increase_stock'?")
     plt.show()
 
     # Don't optimize according to these...
-    '''
     print(classification_report(y_test, y_pred))
 
     cm = confusion_matrix(y_test, y_pred)
@@ -52,4 +51,4 @@ if __name__ == "__main__":
     disp.plot(cmap=plt.cm.Blues)
     plt.title("Confusion Matrix for Random Forest")
     plt.show()
-    '''
+    
