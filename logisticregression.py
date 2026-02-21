@@ -7,7 +7,7 @@ from load_data import get_ready_data
 
 cleaned_fil = get_ready_data()
 
-X = cleaned_fil.drop(columns=["increase_stock"])
+X = cleaned_fil.drop(columns=["increase_stock", "holiday", "month"])
 Y = cleaned_fil["increase_stock"]
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3) #Test size är på 30 % men större träningsdata kommer inte ge högre träffsäkerhet
