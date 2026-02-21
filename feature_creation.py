@@ -64,10 +64,11 @@ def add_dew_point_depression_feature(df, att_dict):
     att_dict['dew_point_depression'] = 'numerical'    
     return df, att_dict
 
-def one_hot_encode_categorical(df, att_dict):
-    ''' One hot encode all categorical features except the target.
+def one_hot_encode_categorical(df, att_dict, cat_cols=None):
+    ''' One hot encode categorical features, if cat_cols=None, it encodes all features that are categorical.
     '''
-    cat_cols = [col for col in df.columns if att_dict[col] == 'categorical']
+    if cat_cols is None:
+        cat_cols = [col for col in df.columns if att_dict[col] == 'categorical']
     df = pd.get_dummies(df, columns=cat_cols, drop_first=True, dtype=int)
     for col in cat_cols:
         del att_dict[col]
