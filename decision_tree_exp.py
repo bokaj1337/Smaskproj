@@ -9,10 +9,10 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 
-random_state = 69
-rf_orignal_data = RandomForestClassifier(random_state=random_state, class_weight='balanced_subsample') # Balanced subsample
+
+rf_orignal_data = RandomForestClassifier(random_state=69, class_weight='balanced_subsample')
 param_grid = {
-    "n_estimators": [100, 200, 500],
+    "n_estimators": [100, 200, 500, 1000],
     'max_features': ['sqrt', 'log2', 0.3, 0.5, 0.8],
     'max_depth': [5, 10, 15, 20, None],
 }
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     data = get_ready_extended_data()
     X = data.drop("increase_stock", axis=1)
     y = data["increase_stock"]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=random_state, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69, stratify=y)
     grid_search_rf.fit(X_train, y_train)
     print("Best parameters found: ", grid_search_rf.best_params_)
 
@@ -37,18 +37,18 @@ if __name__ == "__main__":
     best_model = grid_search_rf.best_estimator_
     y_pred = best_model.predict(X_test) 
 
+    print(classification_report(y_test, y_pred))
+
+
+
     importances = best_model.feature_importances_
     feat_importances = pd.Series(importances, index=X.columns)
-    feat_importances.sort_values(ascending=False).plot(kind='barh')
+    feat_importances.nlargest(10).plot(kind='barh')
     plt.title("What features are most important for predicting 'increase_stock'?")
     plt.show()
-
-    # Don't optimize according to these...
-    print(classification_report(y_test, y_pred))
 
     cm = confusion_matrix(y_test, y_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot(cmap=plt.cm.Blues)
     plt.title("Confusion Matrix for Random Forest")
     plt.show()
-    

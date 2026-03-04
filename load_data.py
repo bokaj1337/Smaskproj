@@ -18,7 +18,7 @@ def process_data(df, scaler=StandardScaler()):
     Makes stock_demand binary and scales data.
     '''
     out = df.copy()
-    label_mapping = {"low_bike_demand":1, "high_bike_demand":0}
+    label_mapping = {"low_bike_demand":0, "high_bike_demand":1}
     out["increase_stock"] = out["increase_stock"].map(label_mapping)
     numerical_columns = ["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]
     for col in numerical_columns:
@@ -35,8 +35,9 @@ def create_attribute_type_dict(Mdf):
     attribute_type=dict([("temp",'numerical'),("dew",'numerical'),("humidity",'numerical'),
                      ("precip",'numerical'),("snowdepth",'numerical'),("windspeed",'numerical'),
                      ("cloudcover",'numerical'),("visibility",'numerical')])
-    attribute_type.update(dict([("hour_of_day",'categorical'),("day_of_week",'categorical'),("month",'categorical'),
-                            ("holiday",'categorical'),("weekday",'categorical'),("summertime",'categorical')]))
+    attribute_type.update(dict([("hour_of_day",'categorical'),("day_of_week",'categorical'),
+                                ("month",'categorical')]))
+    attribute_type.update(dict([("holiday",'binary'),("weekday",'binary'),("summertime",'binary')]))
     attribute_type.update(dict([("increase_stock",'target')]))
     return attribute_type
 
