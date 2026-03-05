@@ -82,7 +82,7 @@ def get_ready_extended_data(scaler=StandardScaler()):
     extended_data = get_unscaled_data()
     attribute_type = create_attribute_type_dict()
     ''' How to encode categorials:'''
-    extended_data, attribute_type = one_hot_encode_categorical(extended_data, attribute_type)
+    #extended_data, attribute_type = one_hot_encode_categorical(extended_data, attribute_type)
     
     ''' Add features if wanted'''
     #extended_data, attribute_type = add_app_temp_features(extended_data, attribute_type )
