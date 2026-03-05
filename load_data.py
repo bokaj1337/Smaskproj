@@ -31,7 +31,7 @@ def get_ready_data():
     df = process_data(df)
     return df
 
-def create_attribute_type_dict():
+def create_attribute_type_dict(Mdf):
     attribute_type=dict([("temp",'numerical'),("dew",'numerical'),("humidity",'numerical'),
                      ("precip",'numerical'),("snowdepth",'numerical'),("windspeed",'numerical'),
                      ("cloudcover",'numerical'),("visibility",'numerical')])
