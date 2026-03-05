@@ -31,7 +31,7 @@ grid_search = GridSearchCV(
     pipeline,
     param_grid,
     cv=skf,
-    scoring='f1_macro',
+    scoring='f1',
     n_jobs=-1
 )
 

@@ -17,7 +17,7 @@ lda_params = {
     'solver': ['lsqr', 'eigen'],
     'shrinkage': [None, 'auto', 0.0, 0.25, 0.5, 0.75, 1.0]
 }
-lda_grid = GridSearchCV(LinearDiscriminantAnalysis(), lda_params, cv=5, scoring='f1_macro', error_score=0)
+lda_grid = GridSearchCV(LinearDiscriminantAnalysis(), lda_params, cv=5, scoring='f1', error_score=0)
 lda_grid.fit(X_train, Y_train)
 print(f"Best LDA Parameters: {lda_grid.best_params_}")
 print(f"Best LDA Cross-Validation Score: {lda_grid.best_score_:.4f}")
@@ -35,7 +35,7 @@ print(f"LDA F1-Score on Test Set: {lda_f1:.4f}\n")
 qda_params = {
     'reg_param': [0.1, 0.25, 0.5, 0.75, 1.0]
 }
-qda_grid = GridSearchCV(QuadraticDiscriminantAnalysis(), qda_params, cv=5, scoring='f1_macro', error_score=0)
+qda_grid = GridSearchCV(QuadraticDiscriminantAnalysis(), qda_params, cv=5, scoring='f1', error_score=0)
 qda_grid.fit(X_train, Y_train)
 print(f"Best QDA Parameters: {qda_grid.best_params_}")
 print(f"Best QDA Cross-Validation Score: {qda_grid.best_score_:.4f}")
