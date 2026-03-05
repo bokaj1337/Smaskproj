@@ -23,7 +23,7 @@ if __name__ == "__main__":
     data = get_ready_extended_data()
     X = data.drop("increase_stock", axis=1)
     y = data["increase_stock"]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=random_state, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random_state, stratify=y)
     grid_search_rf.fit(X_train, y_train)
     print("Best parameters found: ", grid_search_rf.best_params_)
 
@@ -41,6 +41,7 @@ if __name__ == "__main__":
     feat_importances = pd.Series(importances, index=X.columns)
     feat_importances.sort_values(ascending=False).plot(kind='barh')
     plt.title("What features are most important for predicting 'increase_stock'?")
+    plt.savefig("figures/decision_tree/feature_importance.png", bbox_inches='tight',)
     plt.show()
 
     # Don't optimize according to these...
@@ -50,5 +51,6 @@ if __name__ == "__main__":
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot(cmap=plt.cm.Blues)
     plt.title("Confusion Matrix for Random Forest")
+    plt.savefig("figures/decision_tree/confusion_matrix.png", bbox_inches='tight',)
     plt.show()
     
