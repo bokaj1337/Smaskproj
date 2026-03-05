@@ -13,11 +13,10 @@ X = cleaned_fil.drop(columns=["increase_stock"])
 Y = cleaned_fil["increase_stock"]
 
 X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y, test_size=0.3, random_state=69
-)
+    X, Y, test_size=0.3, random_state=69)
 
 pipeline = Pipeline([
-    ('scaler', StandardScaler()),
+    #('scaler', StandardScaler()), det här ingår typ redan i get_ready_data() så jag tog bort det
     ('knn', KNeighborsClassifier())
 ])
 

@@ -17,13 +17,13 @@ param_grid = {
     'max_depth': [5, 10, 15, 20, None],
 }
 
-grid_search_rf = GridSearchCV(estimator=rf_orignal_data, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2, scoring='f1')
+grid_search_rf = GridSearchCV(estimator=rf_orignal_data, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2, scoring='f1_macro')
 
 if __name__ == "__main__":
-    data = get_ready_extended_data()
+    data = get_ready_data()
     X = data.drop("increase_stock", axis=1)
     y = data["increase_stock"]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random_state, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random_state)
     grid_search_rf.fit(X_train, y_train)
     print("Best parameters found: ", grid_search_rf.best_params_)
 

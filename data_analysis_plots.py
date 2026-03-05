@@ -67,20 +67,25 @@ def plot_monthly_avg(dataframe):
 def plot_temporal_demand(dataframe):
     fig, (ax1, ax2, ax3) = plt.subplots(3)
 
-    fig.suptitle('Vertically stacked subplots')
-
     hourly = dataframe.groupby("hour_of_day")["increase_stock"].mean().reset_index()
     ax1.plot(hourly["hour_of_day"], hourly["increase_stock"])
+    ax1.grid()
     ax1.set_title("Demand over hours of day")
 
     weekday = dataframe.groupby("day_of_week")["increase_stock"].mean().reset_index()  
     ax2.plot(weekday["day_of_week"], weekday["increase_stock"])  
     ax2.set_title("Demand over day of week") 
+    ax2.grid()
 
     monthly = dataframe.groupby("month")["increase_stock"].mean().reset_index()  
     ax3.plot(monthly["month"], monthly["increase_stock"]) 
     ax3.set_title("Demand over month")
-    plt.show()    
+    ax3.grid()
+    plt.tight_layout()
+    plt.savefig("figures/temporal_demand.png", bbox_inches='tight',)
+    plt.show()
+    plt.figure(figsize=(6,5))
+
 plot_temporal_demand(data)
 
 
