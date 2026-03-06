@@ -13,25 +13,6 @@ Y = cleaned_fil["increase_stock"]
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=69)
 
-lda_params = {
-    'solver': ['lsqr', 'eigen'],
-    'shrinkage': [None, 'auto', 0.0, 0.25, 0.5, 0.75, 1.0]
-}
-lda_grid = GridSearchCV(LinearDiscriminantAnalysis(), lda_params, cv=5, scoring='f1_macro', error_score=0)
-lda_grid.fit(X_train, Y_train)
-print(f"Best LDA Parameters: {lda_grid.best_params_}")
-print(f"Best LDA Cross-Validation Score: {lda_grid.best_score_:.4f}")
-lda_mean_test = lda_grid.cv_results_['mean_test_score'].mean()
-lda_std_test = lda_grid.cv_results_['std_test_score'].mean()
-print(f"LDA Mean Test Score: {lda_mean_test:.4f} ± {lda_std_test:.4f}")
-
-lda_model = lda_grid.best_estimator_
-lda_pred = lda_model.predict(X_test)
-lda_accuracy = accuracy_score(Y_test, lda_pred)
-lda_f1 = f1_score(Y_test, lda_pred)
-print(f"\nLDA Accuracy on Test Set: {lda_accuracy:.4f}")
-print(f"LDA F1-Score on Test Set: {lda_f1:.4f}\n")
-
 qda_params = {
     'reg_param': [0.1, 0.25, 0.5, 0.75, 1.0]
 }
