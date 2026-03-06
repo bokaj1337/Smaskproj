@@ -12,12 +12,12 @@ import matplotlib.pyplot as plt
 random_state = 69
 rf_orignal_data = RandomForestClassifier(random_state=random_state, class_weight='balanced_subsample') # Balanced subsample
 param_grid = {
-    "n_estimators": [100, 200, 500],
+    "n_estimators": [10, 50, 100, 200, 500, 750, 1000],
     'max_features': ['sqrt', 'log2', 0.3, 0.5, 0.8],
     'max_depth': [5, 10, 15, 20, None],
 }
 
-grid_search_rf = GridSearchCV(estimator=rf_orignal_data, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2, scoring='f1')
+grid_search_rf = GridSearchCV(estimator=rf_orignal_data, param_grid=param_grid, cv=5, n_jobs=10, verbose=2, scoring='f1')
 
 if __name__ == "__main__":
     data = get_ready_data()
