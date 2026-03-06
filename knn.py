@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from load_data import get_ready_data
+from load_data_real import get_ready_data as get_ready_real_data
 
 # Load data
 cleaned_fil = get_ready_data()
@@ -52,4 +53,10 @@ print("Best CV Std:", best_std)
 print(f"Test Accuracy: {accuracy_score(Y_test, Y_pred):.4f}")
 print(f"\nClassification Report:\n{classification_report(Y_test, Y_pred)}")
 print(f"\nConfusion Matrix:\n{confusion_matrix(Y_test, Y_pred)}")
+<<<<<<< HEAD
 print(best_model)
+=======
+
+
+
+>>>>>>> 5d8a45457ee80ee7444a5f2037505351af0de12d
