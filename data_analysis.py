@@ -50,6 +50,29 @@ def chi2_stats(df, features):
     plt.show()
 
 
+def plot_temporal_demand(dataframe):
+    fig, (ax1, ax2, ax3) = plt.subplots(3)
+
+    hourly = dataframe.groupby("hour_of_day")["increase_stock"].mean().reset_index()
+    ax1.plot(hourly["hour_of_day"], hourly["increase_stock"])
+    ax1.grid()
+    ax1.set_title("Demand over hours of day")
+
+    weekday = dataframe.groupby("day_of_week")["increase_stock"].mean().reset_index()  
+    ax2.plot(weekday["day_of_week"], weekday["increase_stock"])  
+    ax2.set_title("Demand over day of week") 
+    ax2.grid()
+
+    monthly = dataframe.groupby("month")["increase_stock"].mean().reset_index()  
+    ax3.plot(monthly["month"], monthly["increase_stock"]) 
+    ax3.set_title("Demand over month")
+    ax3.grid()
+    plt.tight_layout()
+    plt.savefig("figures/temporal_demand.png", bbox_inches='tight',)
+    plt.show()
+    plt.figure(figsize=(6,5))
+
+
 if __name__ == "__main__":
     # Get the standardscaled data
     std_data = get_ready_data()
@@ -58,9 +81,10 @@ if __name__ == "__main__":
     num_cols = [col for col in std_data.columns if attribute_type[col] == 'numerical']
     cat_cols = [col for col in std_data.columns if attribute_type[col] == 'categorical' or attribute_type[col] == 'binary']
 
-    corr_mat(std_data, num_cols)
+    #corr_mat(std_data, num_cols)
     #corr_mat(std_data, cat_cols)
     #chi2_stats(std_data, ['holiday', 'weekday', 'summertime'])
+    plot_temporal_demand(std_data)
     ''' Observations:
     - Corr matrix shows that temp and dew have high corr with target. However, they
     are also highly correlated with each other, so we might want to drop one of them.
