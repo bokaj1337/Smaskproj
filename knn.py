@@ -55,8 +55,10 @@ print(f"\nClassification Report:\n{classification_report(Y_test, Y_pred)}")
 print(f"\nConfusion Matrix:\n{confusion_matrix(Y_test, Y_pred)}")
 <<<<<<< HEAD
 print(best_model)
-=======
 
 
 
->>>>>>> 5d8a45457ee80ee7444a5f2037505351af0de12d
+
+
+
+# 5d8a45457ee80ee7444a5f2037505351af0de12d
