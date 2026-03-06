@@ -8,6 +8,9 @@ cleaned_fil = get_ready_data()
 
 predicted = knn_model.predict(cleaned_fil)
 
+
+# print(knn_model.predict_proba(cleaned_fil))
+
 # with open("predictions.csv", "w") as f:
 #     f.write(",".join(map(str, predicted)))
 
