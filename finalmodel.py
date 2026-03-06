@@ -9,5 +9,6 @@ cleaned_fil = get_ready_data()
 predicted = knn_model.predict(cleaned_fil)
 
 print(predicted)
+print(knn_model.predict_proba(cleaned_fil))
 
 
