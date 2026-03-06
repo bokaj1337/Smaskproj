@@ -53,7 +53,6 @@ print("Best CV Std:", best_std)
 print(f"Test Accuracy: {accuracy_score(Y_test, Y_pred):.4f}")
 print(f"\nClassification Report:\n{classification_report(Y_test, Y_pred)}")
 print(f"\nConfusion Matrix:\n{confusion_matrix(Y_test, Y_pred)}")
-<<<<<<< HEAD
 print(best_model)
 
 

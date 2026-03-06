@@ -5,8 +5,8 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler
     Use get_ready_data() to get cleaned data that is normalized (gaussian),
     use get_unscaled_data() to get cleaned data that is not normalized.
 '''
-def load_raw_data():
-    return pd.read_csv("training_data_VT2026.csv")
+def load_raw_data(file_path="training_data_VT2026.csv"):
+    return pd.read_csv(file_path)
 
 def remove_constant_data(df):
     constant_columns = [col for col in df.columns if df[col].nunique() == 1]
@@ -19,14 +19,15 @@ def process_data(df, scaler=StandardScaler()):
     '''
     out = df.copy()
     label_mapping = {"low_bike_demand":0, "high_bike_demand":1}
-    out["increase_stock"] = out["increase_stock"].map(label_mapping)
+    if "increase_stock" in out.columns:
+        out["increase_stock"] = out["increase_stock"].map(label_mapping)
     numerical_columns = ["temp","dew","humidity","precip","snowdepth","windspeed","cloudcover","visibility"]
     for col in numerical_columns:
         out[col] = scaler.fit_transform(out[[col]])
     return out
 
-def get_ready_data():
-    df = load_raw_data()
+def get_ready_data(file_path="training_data_VT2026.csv"):
+    df = load_raw_data(file_path=file_path)
     df = remove_constant_data(df)
     df = process_data(df)
     return df
