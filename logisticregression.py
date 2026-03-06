@@ -17,7 +17,7 @@ param_grid = {'C': [0.1, 1 ,5,10,100], 'penalty': ['l1','l2'], 'class_weight': [
 
 skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=69)
 
-grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=skf, scoring='f1_macro', verbose=1)
+grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=skf, scoring='f1', verbose=1)
 
 grid_search.fit(X_train, Y_train)
 

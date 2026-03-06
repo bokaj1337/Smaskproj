@@ -17,7 +17,7 @@ param_grid = {
     'max_depth': [5, 10, 15, 20, None],
 }
 
-grid_search_rf = GridSearchCV(estimator=rf_orignal_data, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2, scoring='f1_macro')
+grid_search_rf = GridSearchCV(estimator=rf_orignal_data, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2, scoring='f1')
 
 if __name__ == "__main__":
     data = get_ready_data()

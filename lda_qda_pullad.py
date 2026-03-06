@@ -16,7 +16,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_
 qda_params = {
     'reg_param': [0.1, 0.25, 0.5, 0.75, 1.0]
 }
-qda_grid = GridSearchCV(QuadraticDiscriminantAnalysis(), qda_params, cv=5, scoring='f1_macro', error_score=0)
+qda_grid = GridSearchCV(QuadraticDiscriminantAnalysis(), qda_params, cv=5, scoring='f1', error_score=0)
 qda_grid.fit(X_train, Y_train)
 print(f"Best QDA Parameters: {qda_grid.best_params_}")
 print(f"Best QDA Cross-Validation Score: {qda_grid.best_score_:.4f}")
